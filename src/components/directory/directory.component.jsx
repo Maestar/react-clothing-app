@@ -52,8 +52,8 @@ class Directory extends React.Component {
 
                 {                           // remember this is called detructuring, this is the same as
                                             // calling section.title, section.imageurl in the function's internals
-                    this.state.sections.map(( {title, imageUrl, id, size} ) => (
-                        <MenuItem key={id} title={title} imageUrl={imageUrl} size={size}/>
+                    this.state.sections.map(( {id, ...otherSectionProps} ) => (
+                        <MenuItem key={id} {...otherSectionProps}/> // {...othersectionprops} equivalent to title={title} size={size} ect...
                     ))
                 }
 
