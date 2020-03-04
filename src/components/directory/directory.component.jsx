@@ -50,7 +50,7 @@ class Directory extends React.Component {
 
             <div className='directory-menu'>
 
-                {                           // remember this is called detructuring, this is the same as
+                {                           // remember this is called destructuring, this is the same as
                                             // calling section.title, section.imageurl in the function's internals
                     this.state.sections.map(( {id, ...otherSectionProps} ) => (
                         <MenuItem key={id} {...otherSectionProps}/> // {...othersectionprops} equivalent to title={title} size={size} ect...
