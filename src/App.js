@@ -10,7 +10,7 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 
 //for when users log in
 import { auth } from './firebase/firebase.utils';
-
+import { createUserProfileDocument } from './firebase/firebase.utils';
 //react-router-dom facts:
 //switch from react-router-dom only lets one route render at a time
 //
@@ -32,9 +32,24 @@ class App extends React.Component {
  unsubscribeFromAuth = null;
 
  componentDidMount(){
-  this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-     this.setState({ currentUser: user });
-   })
+  this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+     if (userAuth != null){
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot( (snapShot) => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          })
+        });
+        
+     }
+     else{
+       this.setState({ currentUser: userAuth });
+     }
+   });
  }
 
  componentWillUnmount(){

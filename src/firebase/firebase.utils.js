@@ -13,6 +13,35 @@ const config =  {
     appId: "1:745128296083:web:557a4049676f6c4eef9766"
   };
 
+  //asynchronus action, because we're calling an API which is always asynchronous
+  export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if(!userAuth) return;
+
+    //CRUD methods have to be used with the user reference, they cannot be used
+    //with the snapshot! snapshot just tells you if data exists in firebase.
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+    const snapShop = await userRef.get();
+    
+    if(!snapShop.exists){
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+
+        try{
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+        }catch (error){
+            console.log('error creating user', error.message);
+        }
+    }
+    
+    return userRef;
+  }
+
   firebase.initializeApp(config);
 
 export const auth = firebase.auth();
