@@ -14,7 +14,7 @@ class SignUp extends React.Component {
     constructor(){
         super();
 
-        this.State = {
+        this.state = {
             displayName: '',
             email: '',
             password: '',
@@ -24,7 +24,7 @@ class SignUp extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const {displayName, email, password, confirmPassword} = this.State;
+        const {displayName, email, password, confirmPassword} = this.state;
 
         if(password !== confirmPassword){
             alert("Passwords don't match");
@@ -56,10 +56,10 @@ class SignUp extends React.Component {
 
         this.setState({ [name]: value });
 
-    }
+    };
 
     render(){
-        const {displayName, email, password, confirmPassword} = this.State;
+        const {displayName, email, password, confirmPassword} = this.state;
         return(
             <div className = 'sign-up'>
                 <h2 className='title'>
